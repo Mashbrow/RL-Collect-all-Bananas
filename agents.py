@@ -140,6 +140,62 @@ class DQNAgent():
         for target_param, local_param in zip(target_model.parameters(), local_model.parameters()):
             target_param.data.copy_(tau*local_param.data + (1.0-tau)*target_param.data)
             
+class DQNAgentF(DQNAgent):
+    
+    #DQNAgent with Fixed target
+    
+    def __init__(self, state_size, action_size, seed):
+        
+        super().__init__(state_size, action_size, seed)
+        self.u_step = 0
+        self.t_step = 0
+        
+
+        self.TAU = 0.001  # for soft update of target parameters
+        self.UPDATE_EVERY = 4 
+        self.LEARN_EVERY = 8
+        
+    def step(self, state, action, reward, next_state, done):
+        # Save experience in replay memory
+        self.memory.add(state, action, reward, next_state, done)
+        
+        # Learn every UPDATE_EVERY time steps.
+        self.t_step = (self.t_step + 1) % self.LEARN_EVERY
+        self.u_step = (self.u_step + 1) % self.UPDATE_EVERY
+        
+        if self.u_step ==0:
+            if len(self.memory) > self.BATCH_SIZE:
+                experiences= self.memory.sample()
+                self.learn(experiences, self.GAMMA)
+                
+        if self.t_step == 0:
+            self.soft_update(self.qnetwork_local, self.qnetwork_target, self.TAU)
+            
+    def learn(self, experiences, gamma):
+        """Update value parameters using given batch of experience tuples.
+
+        Params
+        ======
+            experiences (Tuple[torch.Variable]): tuple of (s, a, r, s', done) tuples 
+            gamma (float): discount factor
+        """
+        states, actions, rewards, next_states, dones = experiences
+
+        # Get max predicted Q values (for next states) from target model
+        Q_targets_next = self.qnetwork_target(next_states).detach().max(1)[0].unsqueeze(1)
+        # Compute Q targets for current states 
+        Q_targets = rewards + (gamma * Q_targets_next * (1 - dones))
+
+        # Get expected Q values from local model
+        Q_expected = self.qnetwork_local(states).gather(1, actions)
+
+        # Compute loss
+        loss = F.mse_loss(Q_expected, Q_targets)
+        # Minimize the loss
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+        
 class DDQNAgent(DQNAgent):
     
     def __init__(self, state_size, action_size, seed):
@@ -149,9 +205,9 @@ class DDQNAgent(DQNAgent):
         self.t_step = 0
         
 
-        self.TAU = 0.5  # for soft update of target parameters
-        self.UPDATE_EVERY = 1
-        self.LEARN_EVERY = 7
+        self.TAU = 1e-3  # for soft update of target parameters
+        self.UPDATE_EVERY = 4 
+        self.LEARN_EVERY = 8 
         
     def step(self, state, action, reward, next_state, done):
         # Save experience in replay memory
