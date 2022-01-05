@@ -30,3 +30,4 @@ Then follow the instructions on this [section](https://github.com/udacity/deep-r
 - A notebook containing the code to train an agent to solve the task.
 - A .py file containing the architecture for a DQN Agent and a DDQN Agent.
 - A .pth file containing the weights of an agent that solved the task (DQN and DDQN).
+- A report describing the architecture and the hyperparameters used to solve the task.
