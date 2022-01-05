@@ -5,7 +5,7 @@
 This project aims at training an agent to navigate and collect bananas.
 Rules are the following:
 - Reward = +1 for each yellow banana collected
-- Reward = -1 for each blue ones (Thus the goal is to collect as much yellow banana as possible while avoiding collecting blue ones).
+- Reward = -1 for each blue ones (Thus the goal is to collect as many yellow bananas as possible while avoiding collecting blue ones).
 
 The state space is a 37 dimensions space which contains the agent's velocity along with a ray-based perception of objects around agent's forward direction.
 
