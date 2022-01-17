@@ -2,7 +2,7 @@
 
 ## Introduction
 
-![image of the environment](Banana.gif)
+![image of the environment](Banana.gif "Video of the environment taken from the deep-reinforcement-learning repo from udacity")
 
 This project is part of the Udacity Nanodegree on Reinforcement Learning and  aims at training an agent to navigate and collect bananas.
 Rules are the following:
