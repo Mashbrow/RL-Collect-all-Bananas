@@ -41,3 +41,5 @@ Then, place the file in the p1_navigation/ folder in the DRLND GitHub repository
 - A .py file containing the architecture for a DQN Agent and a DDQN Agent.
 - A .pth file containing the weights of an agent that solved the task (DQN and DDQN).
 - A report describing the architecture and the hyperparameters used to solve the task.
+
+Code was adapted from a piece of code implementing ddqn agent from this [repo](https://github.com/udacity/deep-reinforcement-learning) and was then adapted so that it could achieve the task. 
