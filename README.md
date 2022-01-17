@@ -2,6 +2,8 @@
 
 ## Introduction
 
+![image of the environment](Banana.gif)
+
 This project is part of the Udacity Nanodegree on Reinforcement Learning and  aims at training an agent to navigate and collect bananas.
 Rules are the following:
 - Reward = +1 for each yellow banana collected
